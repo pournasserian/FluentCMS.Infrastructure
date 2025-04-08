@@ -117,6 +117,8 @@ flowchart TD
 
 Note: When triggered by **update memory bank**, I MUST review every memory bank file, even if some don't require updates. Focus particularly on activeContext.md and progress.md as they track current state.
 
-Note: Do NOT write XML documentation in C# files and codes. Just write INLINE comments or descriptions.
+Note: NEVER use `Async` suffix in method names. Always pass cancellationToken argument (with default value)  in async methods.
+
+Note: Do NOT write XML documentation in C# files and codes. Just write INLINE comments or descriptions. Use C# coding convention and best practuces. Do NOT use `Async` suffix in method names.
 
 REMEMBER: After every memory reset, I begin completely fresh. The Memory Bank is my only link to previous work. It must be maintained with precision and clarity, as my effectiveness depends entirely on its accuracy.

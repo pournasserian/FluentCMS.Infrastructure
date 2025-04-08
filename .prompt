@@ -1,0 +1,55 @@
+I want to develop plugin system in ASP.NET core (C#). Then, other developers can develop their own services and api and easily can plug them into the main application.
+I want to be able to enable/disable a plugin runtime.
+It should support these scenarios:
+ - When installed, there maybe a first-time setup process (creating some files, database, et.) 
+ - Using DI, the developers should be able to define their own service dependencies and also application services (Configure and ConfigureServices)
+ - Runtime loading/unloading
+In my asp.net core web api project i want to develop a plugin architecture,  then I will be able to add the services dynamically. It should support api controllers as well.
+
+Plugin Discovery: How should the main application discover available plugins?  Database entries registering plugins.
+
+Plugin Dependencies: The plugins are allowed to have external dependencies beyond the core application's dependencies
+
+API Versioning: No need to API versioning
+
+Security: Consider how to prevent malicious plugins from compromising the main application
+
+Configuration: The plugins have access to configuration using DI
+
+First-time Setup: Some plugins may need to execute a code in the first time after setup: in Todo plugin, it need to check if the required database schema or tables is defined/created in data layer or not. Then in the setup, it should run the setup process which is defined/coded by plugin developer.
+
+Enable/Disable Runtime: dynamic approach required
+
+Error Handling: Suggest some best practices for error handling
+
+Plugin Communication: Plugin communication is required. Suggest some options for plugin communication
+
+Plugin Storage: Plugins are separate assemblies stored in the deployed folder.
+
+Plugin Isolation: It is acceptable for all plugins to run in the same process as the main application.
+
+Background Tasks: It should support background tasks.
+
+Plugin Communication Protocol: You suggest the best practices.
+
+Database Integration: Each plugin may have it's own database, or use an existing database.
+
+Authentication & Authorization: The plugins will use the HttpContext using DI for the current user's access.
+
+User Interface for Management: No need for the UI at this step.
+
+Loading Strategy: You suggest.
+
+Plugin Versioning: It is preferred to support versioning, but not sure how!
+
+Performance Considerations: Performance requirements for plugin loading/unloading times is not a concern at this step.
+
+I want plugins to be able to modify the application's middleware pipeline.
+Plugins should be able to define their own routes, following a predefined routing convention.
+Plugin communication is synchronous or asynchronous communication (both) and the plugin developer decides how to use.
+For plugin discovery via database, I want only metadata in the database.
+For runtime enabling/disabling, there is no need the system maintain plugin state between application restarts.
+
+Write project's complete description (details, scope, functionalities, etc.) in markdown format.
+
+First, review the requirements and ask me any questions for more clarification.
