@@ -2,6 +2,7 @@ using FluentCMS.Infrastructure.Core.Communication;
 using FluentCMS.Infrastructure.Plugins.Communication;
 using FluentCMS.Infrastructure.Plugins.Discovery;
 using FluentCMS.Infrastructure.Plugins.Loading;
+using FluentCMS.Infrastructure.Plugins.Options;
 using FluentCMS.Infrastructure.Plugins.Registry;
 using FluentCMS.Infrastructure.Storage.Data;
 using Microsoft.EntityFrameworkCore;
@@ -14,17 +15,18 @@ namespace FluentCMS.Infrastructure.Host.Extensions
     {
         public static IServiceCollection AddFluentCmsPluginSystem(this IServiceCollection services, IConfiguration configuration)
         {
+            // Add plugin options
+            services.Configure<PluginOptions>(configuration.GetSection("Plugins"));
+            
             // Add database context
             services.AddDbContext<PluginDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             // Register plugin system services
             services.AddSingleton<IPluginEventBus, PluginEventBus>();
-            
-            // TODO: Implement and register these services when they are developed
-            //services.AddScoped<IPluginDiscoveryService, PluginDiscoveryService>();
-            //services.AddScoped<IPluginRegistry, PluginRegistry>();
-            //services.AddSingleton<IPluginLoader, PluginLoader>();
+            services.AddScoped<IPluginDiscoveryService, PluginDiscoveryService>();
+            services.AddScoped<IPluginRegistry, PluginRegistry>();
+            services.AddSingleton<IPluginLoader, PluginLoader>();
 
             return services;
         }
