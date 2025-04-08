@@ -1,16 +1,19 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentCMS.Infrastructure.Core.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Sample.Plugin
 {
-    public class SamplePlugin : IPlugin, IPluginStartup
+    public class SamplePlugin : IPlugin, IPluginStartup, IBackgroundTaskProvider
     {
         private ILogger<SamplePlugin> _logger;
+        private ILoggerFactory _loggerFactory;
         
         public string Id => "sample-plugin";
         public string Name => "Sample Plugin";
@@ -18,7 +21,9 @@ namespace Sample.Plugin
 
         public async Task Initialize(IServiceProvider serviceProvider, CancellationToken cancellationToken = default)
         {
-            _logger = serviceProvider.GetService<ILoggerFactory>()?.CreateLogger<SamplePlugin>();
+            var factory = serviceProvider.GetService<ILoggerFactory>();
+            _loggerFactory = factory;
+            _logger = factory?.CreateLogger<SamplePlugin>();
             _logger?.LogInformation("Sample plugin initializing");
             
             // Simulate some initialization work
@@ -45,7 +50,13 @@ namespace Sample.Plugin
 
         public void Configure(IApplicationBuilder app)
         {
-            // Configure middleware if needed
+            // No middleware configuration for simplicity
+        }
+        
+        // Provide background services
+        public IEnumerable<IHostedService> GetBackgroundServices()
+        {
+            yield return new SampleBackgroundService(_loggerFactory?.CreateLogger<SampleBackgroundService>());
         }
     }
 
