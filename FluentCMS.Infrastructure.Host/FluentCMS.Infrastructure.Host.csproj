@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\FluentCMS.Infrastructure.Core\FluentCMS.Infrastructure.Core.csproj" />
+    <ProjectReference Include="..\FluentCMS.Infrastructure.Plugins\FluentCMS.Infrastructure.Plugins.csproj" />
+    <ProjectReference Include="..\FluentCMS.Infrastructure.Storage\FluentCMS.Infrastructure.Storage.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
