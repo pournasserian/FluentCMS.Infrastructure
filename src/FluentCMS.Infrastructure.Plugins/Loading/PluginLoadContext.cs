@@ -1,30 +1,29 @@
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace FluentCMS.Infrastructure.Plugins.Loading
+namespace FluentCMS.Infrastructure.Plugins.Loading;
+
+// Assembly load context for loading plugin assemblies in isolation
+public class PluginLoadContext : AssemblyLoadContext
 {
-    // Assembly load context for loading plugin assemblies in isolation
-    public class PluginLoadContext : AssemblyLoadContext
+    private readonly AssemblyDependencyResolver _resolver;
+
+    public PluginLoadContext(string pluginPath) : base(isCollectible: true)
     {
-        private readonly AssemblyDependencyResolver _resolver;
+        _resolver = new AssemblyDependencyResolver(pluginPath);
+    }
 
-        public PluginLoadContext(string pluginPath) : base(isCollectible: true)
+    // Override assembly loading to use the resolver for dependencies
+    protected override Assembly Load(AssemblyName assemblyName)
+    {
+        // Try to resolve the assembly path from the plugin dependencies
+        string assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
+        if (assemblyPath != null)
         {
-            _resolver = new AssemblyDependencyResolver(pluginPath);
+            return LoadFromAssemblyPath(assemblyPath);
         }
 
-        // Override assembly loading to use the resolver for dependencies
-        protected override Assembly Load(AssemblyName assemblyName)
-        {
-            // Try to resolve the assembly path from the plugin dependencies
-            string assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
-            if (assemblyPath != null)
-            {
-                return LoadFromAssemblyPath(assemblyPath);
-            }
-
-            // Fall back to default loading if not found
-            return null;
-        }
+        // Fall back to default loading if not found
+        return null;
     }
 }
