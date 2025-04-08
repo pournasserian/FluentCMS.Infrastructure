@@ -1,22 +1,39 @@
 # Project Brief: FluentCMS Plugin System
 
-## Goal
+## Project Vision
+Create a flexible, robust plugin architecture for ASP.NET Core Web API applications that allows developers to dynamically extend core application functionality at runtime without modifying the base application.
 
-Develop a plugin system for FluentCMS that enables dynamic extension of features and functionality without modifying the core application.
+## Core Requirements
+1. **Dynamic Plugin Management**
+   - Discovery, loading, and unloading of plugins at runtime
+   - Enable/disable plugins without application restart
+   - Support plugin lifecycle management (install, activate, deactivate, uninstall)
+   - Version compatibility checking
 
-## Key Features
+2. **Seamless Integration**
+   - Plugin DLLs hosted in the same process as the main application
+   - Dependency injection support for plugin services
+   - API controller integration with automatic route registration
+   - Middleware pipeline integration
+   - Background task support
 
-* **Dynamic Loading:** Load and unload plugins at runtime.
-* **Dependency Injection:** Integrate plugin services using DI.
-* **API Extension:** Allow plugins to define new API endpoints.
-* **Background Tasks:** Support plugin background services.
-* **Inter-plugin Communication:** Enable communication between plugins.
-* **Configuration:** Manage plugin-specific configurations.
-* **Database Integration:** Support plugin-specific database interactions.
-* **Security:** Implement secure plugin loading and execution.
-* **First-time Setup:** Handle plugin installation and initialization.
-* **Versioning:** Manage plugin versions and compatibility.
+3. **Cross-Cutting Concerns**
+   - Inter-plugin communication mechanisms
+   - Configuration management for plugins
+   - Database integration options
+   - Security boundaries and permission systems
+   - Error handling and fault tolerance
 
-## Scope
+## Success Criteria
+- Plugins can be activated/deactivated without restarting the application
+- Plugins can register their own services with proper isolation
+- Plugins can define API endpoints following conventions
+- Plugins can interact with each other through defined communication channels
+- Plugin failures are contained and don't crash the host application
+- Plugin resources are properly managed and cleaned up when deactivated
 
-This project focuses on the core plugin system implementation. Future enhancements may include a plugin marketplace, UI management tools, and advanced isolation mechanisms.
+## Constraints
+- Plugins must be developed as .NET assemblies
+- Host and plugins must target the same .NET Framework version
+- Plugins must follow defined interface contracts
+- Security boundaries must be maintained to prevent malicious plugin behavior
